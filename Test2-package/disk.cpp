@@ -17,5 +17,5 @@ double Disk::distance(Disk& disk){
     double dy = y - disk.y;
     
     double distance = std::sqrt(std::pow(dx,2) + std::pow(dy,2));
-    return distance
+    return distance;
 }
