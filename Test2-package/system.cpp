@@ -1,5 +1,6 @@
 #include <fstream>
-//HINT: COMPLETE THE INCLUDE STATEMENT
+#include "system.h"
+#include "disk.h"
 
 System::System(int N, double displacement,double radius, double boxSize, int seed) {
 
@@ -27,7 +28,7 @@ bool System::overlap(int i){
 }
 
 void System::step() {
-    for (int i; i<disks.size(); ++i) 
+    for (size_t i=0; i<disks.size(); ++i) 
     {
         int selected_disk = std::rand() % disks.size();
         double oldx = disks[selected_disk].x;
@@ -52,7 +53,9 @@ void System::enforceBoundaries(Disk & disk) {
         if (disk.y > boxSize) disk.y = boxSize;
     }
 
-// HINT: PROVIDE A DEFINITION FOR A MEMBER FUNCTION OF THE SYSTEM CLASS CALLED uniform
+double System::uniform(double min, double max){
+    return (max-min)*this->dist(gen)+min;
+}
 
 void System::save(const std::string &filename){
     // save state of disks to file
