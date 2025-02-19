@@ -1,5 +1,6 @@
 #include <fstream>
-//HINT: COMPLETE THE INCLUDE STATEMENT
+#include "system.h"
+#include "disk.h"
 
 System::System(int N, double displacement,double radius, double boxSize, int seed) {
 
@@ -12,7 +13,7 @@ System::System(int N, double displacement,double radius, double boxSize, int see
 
         for (int i = 0; i < nSide && disks.size() < N; ++i) {
             for (int j = 0; j < nSide && disks.size() < N; ++j) {
-                disks.push_back(Disk(i * 2*radius, j * 2*radius, radius));
+                disks.push_back(Disk(i * 2*radius + radius, j * 2*radius + radius, radius));
             }
         }
     }   
@@ -27,7 +28,7 @@ bool System::overlap(int i){
 }
 
 void System::step() {
-    for (int i; i<disks.size(); ++i) 
+    for (size_t i=0; i<disks.size(); ++i) 
     {
         int selected_disk = std::rand() % disks.size();
         double oldx = disks[selected_disk].x;
@@ -46,13 +47,15 @@ void System::step() {
     }
 }
 void System::enforceBoundaries(Disk & disk) {
-        if (disk.x < 0) disk.x = 0;
-        if (disk.x > boxSize) disk.x = boxSize;
-        if (disk.y < 0) disk.y = 0;
-        if (disk.y > boxSize) disk.y = boxSize;
+        if (disk.x < disk.radius) disk.x = disk.radius;
+        if (disk.x > boxSize-disk.radius) disk.x = boxSize-disk.radius;
+        if (disk.y < disk.radius) disk.y = disk.radius;
+        if (disk.y > boxSize-disk.radius) disk.y = boxSize-disk.radius;
     }
 
-// HINT: PROVIDE A DEFINITION FOR A MEMBER FUNCTION OF THE SYSTEM CLASS CALLED uniform
+double System::uniform(double min, double max){
+    return (max-min)*this->dist(gen)+min;
+}
 
 void System::save(const std::string &filename){
     // save state of disks to file

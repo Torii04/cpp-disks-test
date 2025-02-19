@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-// HINT: COMPLETE THE INCLUDE STATEMENT
+#include "system.h"
 
 
 /**
@@ -19,7 +19,7 @@ int main() {
     System system(N, maxDisplacement,dt,L,1234);
 
     // total number of iterations
-    int iterations = N*500;
+    int iterations = N*50;
 
     for (int i = 0; i < iterations; ++i) {
         // move one disk
